@@ -5,11 +5,11 @@
  * @param {number} weeklySalesForecast Weekly forecast inclusive of order date. 
  * @param {number} salesQuotaWeekend Forecasted sales quota as a percentage for the weekend (Friday, Saturday, Sunday)
  * @param {boolean} previousIsInvoiced Has the previous order been invoiced ? true or false
- * @param {boolean} PlacingEndOFDay If placing your order at the end of the sales day set to true
+ * @param {boolean} PlacingEndOfDay If placing your order at the end of the sales day set to true
  * @param {Array} orderDays Enter your available order days if omitted: "Monday", "Wednesday" and "Friday"
  * @returns Forecasted order requirements as a report!
  */
-function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWeek, weeklySalesForecast, asHTML = false, asUsageGraph = true, salesQuotaWeekend = 51, orderDays = "Monday, Wednesday, Friday", PlacingEndOFDay = false) {
+function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWeek, weeklySalesForecast, asHTML = false, asUsageGraph = true, salesQuotaWeekend = 51, orderDays = "Monday, Wednesday, Friday", PlacingEndOfDay = false) {
 
     // Import products obj
     const products = require('./DeliveryReportHarvest');
@@ -369,7 +369,7 @@ if (asHTML) {
             if (dayType >= 5) currentUsage = weeklyUsage * (weekendQuota / 100);
             else currentUsage = weeklyUsage * (weekDayQuota / 100);
             //If placing order end of day!
-            if (dayDate === dateConverter(placementDate, true) && PlacingEndOFDay) {
+            if (dayDate === dateConverter(placementDate, true) && PlacingEndOfDay) {
                 currentUsage = 0;
             }
             //If previous order is invoiced
@@ -394,10 +394,10 @@ if (asHTML) {
 
 nextOrder(
     "21/4/2023", // Delivery order date
-    true, // Has the previous order been invoiced
+    false, // Has the previous order been invoiced
     23682.40, // Last Week's sales 
     23682, // Weekly Sales Forecast inclusive of order date
-    false, // Return document as HTML
-     true, // As Usage Graph
+    true, // Return document as HTML
+     false, // As Usage Graph
     // Sales quota for the weekend as %
 )
