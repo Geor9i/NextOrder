@@ -156,7 +156,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
         debugCount++;
 
     // IF Previous order is invoiced turn quantities to 0 if they have gone below
-    if (previousIsInvoiced) {
+    if (previousIsInvoiced || dateDifference(orderAcceptDate, placementDate) >= 6) {
         for (let date of productUsageMap.entries()) {
             if (date[0].split("<=>")[1].trim() === dateConverter(orderAcceptDate, true)) {
                 let adjustment = date[1].onHand;    
@@ -176,10 +176,10 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
         }
 
         //Get Delivery day date
-        let orderDayOnhand;
+        let orderDayOnHand;
         for (let entry of productUsageMap.entries()) {
             if (entry[0].split("<=>")[1].trim() === dateConverter(orderAcceptDate, true)) {
-                orderDayOnhand = entry[1].onHand
+                orderDayOnHand = entry[1].onHand
                 break;
             }
         }
@@ -198,7 +198,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
             console.log(products[product].previousOrderDate, `| ordered:`, lastOrderQuantity);
             console.log("Weekly Usage:", currentDemand.toFixed(2));
             console.log(`On hand as of today: ${onHand}`);
-            console.log(`Remaining before delivery on ${weekDays[orderAcceptDate.getDay() - 1]}:`, orderDayOnhand.toFixed(2));
+            console.log(`Remaining before delivery on ${weekDays[orderAcceptDate.getDay() - 1]}:`, orderDayOnHand.toFixed(2));
             console.log(`Estimate quantity remaining on ${weekDays[findDeliveryDate(orderAcceptDate, true).getDay() - 1]}: ${lastMapEntry.onHand.toFixed(2)}`);
             console.log(`----------------------------`);
                 }
@@ -212,7 +212,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
                 <td>${currentDemand.toFixed(2)}</td>
                 <td>${price}</td>
                 <td>${onHand}</td>
-                <td>${orderDayOnhand.toFixed(2)}</td>
+                <td>${orderDayOnHand.toFixed(2)}</td>
                 <td>${lastMapEntry.onHand.toFixed(2)}</td>
                 <td>${previousIsInvoiced ? "Yes" : "No"}</td>
                 </tr>`)
@@ -397,7 +397,7 @@ nextOrder(
     false, // Has the previous order been invoiced
     23682.40, // Last Week's sales 
     23682, // Weekly Sales Forecast inclusive of order date
-    true, // Return document as HTML
+    false, // Return document as HTML
      false, // As Usage Graph
     // Sales quota for the weekend as %
 )
