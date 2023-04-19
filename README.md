@@ -1,2 +1,2 @@
 # NextOrder
- Order qauntity suggestion based on usage
+ Order quantity suggestion based on usage
