@@ -55,7 +55,7 @@ productPreference.chilled["MILK FRESH"] = {
 }
 
 productPreference.chilled["PICKLED SLAW"] = {
-    safeQuantity: 2
+    safeQuantity: 1
 }
 
 productPreference.chilled["PINEAPPLE STICK"] = {
@@ -88,7 +88,8 @@ productPreference.ambientFood["HOT SALSA SMOOTH"] = {
     safeQuantity: 0.333
 }
 productPreference.ambientFood["SALT SACHETS"] = {
-    safeQuantity: 0.05
+    safeQuantity: 0.05,
+    sustainAmount: -2
 }
 productPreference.ambientFood["BREADING HOT&SPICY"] = {
     safeQuantity: 0.166

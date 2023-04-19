@@ -1,6 +1,6 @@
 /**
  * 
- * @param {string} orderAcceptDate The date for which you want to place the order!
+ * @param {string} orderInvoiceDate The date for which you want to place the order!
  * @param {number} salesTotalLastWeek Sales forecast for last week!
  * @param {number} weeklySalesForecast Weekly forecast inclusive of order date. 
  * @param {number} salesQuotaWeekend Forecasted sales quota as a percentage for the weekend (Friday, Saturday, Sunday)
@@ -9,7 +9,7 @@
  * @param {Array} orderDays Enter your available order days if omitted: "Monday", "Wednesday" and "Friday"
  * @returns Forecasted order requirements as a report!
  */
-function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWeek, weeklySalesForecast, asHTML = false, asUsageGraph = true, salesQuotaWeekend = 51, orderDays = "Monday, Wednesday, Friday", PlacingEndOfDay = false) {
+function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastWeek, weeklySalesForecast, asHTML = false, asUsageGraph = true, salesQuotaWeekend = 51, orderDays = "Monday, Wednesday, Friday", PlacingEndOfDay = true) {
 
     // Import products obj
     const products = require('./DeliveryReportHarvest');
@@ -37,7 +37,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
 
 
     // Get placement date and/or order date and turn to date object 
-    orderAcceptDate = dateConverter(orderAcceptDate);
+    orderInvoiceDate = dateConverter(orderInvoiceDate);
 
     //Declare a placement date!  
     let placementDate = dateConverter(new Date());
@@ -46,7 +46,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
     // Check if entered order dates are available!
     // if not suggest the next available date!
     //======================================================
-    if (!orderDays.includes(orderAcceptDate.getDay())) {
+    if (!orderDays.includes(orderInvoiceDate.getDay())) {
         let nextDeliveryDate = findDeliveryDate(placementDate, true)
         console.log(`Please enter a correct order date for your store!\nRecommended date: ${nextDeliveryDate.getDate()}/${nextDeliveryDate.getMonth() + 1}/${nextDeliveryDate.getFullYear()} ${weekDays[nextDeliveryDate.getDay() - 1]}`)
         return 0;
@@ -99,8 +99,8 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
     <th>Weekly Usage:</th>
     <th>Price</th>
     <th>Stock Level</th>
-    <th>Stock Level by ${weekDays[orderAcceptDate.getDay() - 1]}</th>
-    <th>Stock Level by ${weekDays[findDeliveryDate(orderAcceptDate, true).getDay() - 1]}</th>
+    <th>Stock Level by ${weekDays[orderInvoiceDate.getDay() - 1]}</th>
+    <th>Stock Level by ${weekDays[findDeliveryDate(orderInvoiceDate, true).getDay() - 1]}</th>
     <th>Last order Invoiced</th>
 
   </tr>`);
@@ -109,7 +109,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
     //Loop through all product objects and perform order necessity calculations!
     for (let product in products) {
 
-        let nextOrderDate = findDeliveryDate(orderAcceptDate, true);
+        let nextOrderDate = findDeliveryDate(orderInvoiceDate, true);
         let productUsageMap = findDeliveryDate(placementDate, false, true, true, nextOrderDate, true);
 
 
@@ -131,7 +131,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
             deviational = products[product].sustainAmount;
         }
         let safeQuantity = products[product].safeQuantity;
-        safeQuantity = orderAcceptDate.getDay() >= 5 ? safeQuantity * 1 : safeQuantity ;
+        safeQuantity = orderInvoiceDate.getDay() >= 5 ? safeQuantity * 1 : safeQuantity ;
        
         //Map onhand and daily usage figures
         productUsageDaily(currentDemand, productUsageMap, onHand, lastOrderQuantity, productLastOrderedOn);
@@ -155,18 +155,6 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
 
         debugCount++;
 
-    // IF Previous order is invoiced turn quantities to 0 if they have gone below
-    if (previousIsInvoiced || dateDifference(orderAcceptDate, placementDate) >= 6) {
-        for (let date of productUsageMap.entries()) {
-            if (date[0].split("<=>")[1].trim() === dateConverter(orderAcceptDate, true)) {
-                let adjustment = date[1].onHand;    
-                    productRemain = productRemain < 0 ? productRemain + Math.abs(adjustment) : productRemain; 
-                break;
-            }
-        }
-    }
-   
-
         let orderNow = 0;
         if (productRemain < 0) {
             productRemain = Math.abs(productRemain);
@@ -178,7 +166,7 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
         //Get Delivery day date
         let orderDayOnHand;
         for (let entry of productUsageMap.entries()) {
-            if (entry[0].split("<=>")[1].trim() === dateConverter(orderAcceptDate, true)) {
+            if (entry[0].split("<=>")[1].trim() === dateConverter(orderInvoiceDate, true)) {
                 orderDayOnHand = entry[1].onHand
                 break;
             }
@@ -198,8 +186,8 @@ function nextOrder(orderAcceptDate, previousIsInvoiced = false, salesTotalLastWe
             console.log(products[product].previousOrderDate, `| ordered:`, lastOrderQuantity);
             console.log("Weekly Usage:", currentDemand.toFixed(2));
             console.log(`On hand as of today: ${onHand}`);
-            console.log(`Remaining before delivery on ${weekDays[orderAcceptDate.getDay() - 1]}:`, orderDayOnHand.toFixed(2));
-            console.log(`Estimate quantity remaining on ${weekDays[findDeliveryDate(orderAcceptDate, true).getDay() - 1]}: ${lastMapEntry.onHand.toFixed(2)}`);
+            console.log(`Remaining before delivery on ${weekDays[orderInvoiceDate.getDay() - 1]}:`, orderDayOnHand.toFixed(2));
+            console.log(`Estimate quantity remaining on ${weekDays[findDeliveryDate(orderInvoiceDate, true).getDay() - 1]}: ${lastMapEntry.onHand.toFixed(2)}`);
             console.log(`----------------------------`);
                 }
             } else {
@@ -359,6 +347,8 @@ if (asHTML) {
         // Adjust previous weeks usage based on sales forecast!
         let usagePerThousand = (weeklyUsage / salesTotalLastWeek) * 1000;
         weeklyUsage = usagePerThousand * (weeklySalesForecast / 1000);
+        //DeliveryDay Reached marker
+        let deliveryDayMarker = false;
 
         // map out usage and onHand within productMap 
         for (let [key, object] of productMap.entries()) {
@@ -377,6 +367,16 @@ if (asHTML) {
                 incomingStock = previousIsInvoiced ? 0 : incomingStock;
                 onHand += incomingStock;
             }
+            
+            // Zero out minus quantities that add up to onHand before deliveryDay
+             deliveryDayMarker = dayDate === dateConverter(orderInvoiceDate, true) ? true : deliveryDayMarker;
+            if (onHand <= 0 && !deliveryDayMarker) {
+                onHand = 0;
+                currentUsage = 0;
+            }
+            
+
+
             //set usage for the date in the map object
 
             let innerProperties = {
@@ -393,11 +393,11 @@ if (asHTML) {
 }
 
 nextOrder(
-    "21/4/2023", // Delivery order date
+    "24/4/2023", // Delivery order date
     false, // Has the previous order been invoiced
     23682.40, // Last Week's sales 
     23682, // Weekly Sales Forecast inclusive of order date
-    false, // Return document as HTML
+    true, // Return document as HTML
      false, // As Usage Graph
     // Sales quota for the weekend as %
 )
