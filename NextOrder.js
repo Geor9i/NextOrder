@@ -51,6 +51,17 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
         console.log(`Please enter a correct order date for your store!\nRecommended date: ${nextDeliveryDate.getDate()}/${nextDeliveryDate.getMonth() + 1}/${nextDeliveryDate.getFullYear()} ${weekDays[nextDeliveryDate.getDay() - 1]}`)
         return 0;
     }
+
+    //Detect previously placed order for the same placement date!
+    for (let product in products) {
+
+    let productLastOrderedOn = new Date(products[product].previousOrderDate);
+    let lastOrderedArrival = findDeliveryDate(productLastOrderedOn, true);
+    if (dateConverter(lastOrderedArrival, true) === dateConverter(orderInvoiceDate, true) && !previousIsInvoiced) {
+        console.log(`An order for the selected date has already been placed!`);
+        return 0;
+    }
+}
     // -----------------------------------------------------------------------------
 
     let productEvolution = {};
@@ -115,7 +126,7 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
 
         // date object from stored date string!
         let productLastOrderedOn = new Date(products[product].previousOrderDate);
-        let lastOrderedArrival = findDeliveryDate(productLastOrderedOn, true);
+        
 
         //Pre-define variables to store product object params 
         let onHand = products[product].onHand;
@@ -133,7 +144,7 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
         let safeQuantity = products[product].safeQuantity;
         safeQuantity = orderInvoiceDate.getDay() >= 5 ? safeQuantity * 1 : safeQuantity ;
        
-        //Map onhand and daily usage figures
+        //Map onHand and daily usage figures
         productUsageDaily(currentDemand, productUsageMap, onHand, lastOrderQuantity, productLastOrderedOn);
         
 
@@ -393,10 +404,10 @@ if (asHTML) {
 }
 
 nextOrder(
-    "24/4/2023", // Delivery order date
-    false, // Has the previous order been invoiced
-    23682.40, // Last Week's sales 
-    23682, // Weekly Sales Forecast inclusive of order date
+    "21/4/2023", // Delivery order date
+    true, // Has the previous order been invoiced
+    22500.90, // Last Week's sales 
+    22500, // Weekly Sales Forecast inclusive of order date
     true, // Return document as HTML
      false, // As Usage Graph
     // Sales quota for the weekend as %

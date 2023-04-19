@@ -408,7 +408,7 @@ productPreference.frozen["RICE SPICEY"] = {
     safeQuantity: 0.5555
 }
 productPreference.frozen["BUN GLAZED"] = {
-    safeQuantity: 2
+    safeQuantity: 1.5
 }
 productPreference.frozen["COOKIE WHITE CHOC"] = {
     safeQuantity: 0.260
