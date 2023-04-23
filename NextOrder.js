@@ -142,6 +142,7 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
         let price = products[product].price;
         let productSize = products[product].case;
         let quotaReverse = products[product].quotaReverse ? true : false;
+        let dailyUse = products[product].dailyUse;
         if (debugCount == 12) {
              debugger
         }
@@ -153,7 +154,7 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
         safeQuantity = orderInvoiceDate.getDay() >= 5 ? safeQuantity * 1 : safeQuantity ;
        
         //Map onHand and daily usage figures
-        productUsageDaily(currentDemand, productUsageMap, onHand, lastOrderQuantity, productLastOrderedOn, quotaReverse);
+        productUsageDaily(currentDemand, productUsageMap, onHand, lastOrderQuantity, productLastOrderedOn, quotaReverse, dailyUse);
         
 
         //Extract Data for UsageGraph
@@ -350,9 +351,10 @@ if (asHTML) {
      * @param {Number} incomingStock Amount of incoming stock
      * @param {date} incomingStockDate Arrival date for incoming stock
      * @param {boolean} quotaReverse Inverse week and weekend usage!
+     * @param {number} dailyUse Added usage regardless of stats!
      * @returns Filled map with daily requirement data! 
      */
-    function productUsageDaily(weeklyUsage, productMap, onHand, incomingStock, incomingStockDate, quotaReverse) {
+    function productUsageDaily(weeklyUsage, productMap, onHand, incomingStock, incomingStockDate, quotaReverse, dailyUse) {
 
         //Check if there is incoming stock
         if (incomingStock > 0) {
@@ -383,6 +385,7 @@ if (asHTML) {
             let currentUsage;
             if (dayType >= 5) currentUsage = weeklyUsage * (weekendQuota / 100);
             else currentUsage = weeklyUsage * (weekDayQuota / 100);
+            currentUsage += dailyUse;
             //If placing order end of day!
             if (dayDate === dateConverter(placementDate, true) && checkTime) {
                 currentUsage = currentUsage - (currentUsage * openTimePercentage);
@@ -420,9 +423,9 @@ if (asHTML) {
 nextOrder(
     "26/4/2023", // Delivery order date
     false, // Has the previous order been invoiced
-    23682, // Last Week's sales 
-    23900, // Weekly Sales Forecast inclusive of order date
+    22292, // Last Week's sales 
+    23000, // Weekly Sales Forecast inclusive of order date
     true, // Return document as HTML
-     true, // As Usage Graph
+    false, // As Usage Graph
     // Sales quota for the weekend as %
 )

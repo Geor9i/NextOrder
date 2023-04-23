@@ -23,6 +23,7 @@ function reportHarvest (data) {
                 let safeQuantity = 0;
                 let sustainAmount = 0;
                 let quotaReverse = false;
+                let dailyUse = 0;
                 let isBreak = false;
                 for (let group in productUsage) {
                     if (isBreak) {
@@ -40,6 +41,9 @@ function reportHarvest (data) {
                                 if (productUsage[group][product].hasOwnProperty("quotaReverse")) {
                                     quotaReverse = productUsage[group][product].quotaReverse
                                 }
+                                if (productUsage[group][product].hasOwnProperty("dailyUse")) {
+                                    dailyUse = productUsage[group][product].dailyUse
+                                }
                                 delete productUsage[group][product];
                                 isBreak = true;
                                 break;
@@ -56,7 +60,8 @@ function reportHarvest (data) {
                     safeQuantity: safeQuantity,
                     sustainAmount: sustainAmount,
                     quotaReverse: quotaReverse,
-                    onHand: Number(match.groups.onHand)
+                    onHand: Number(match.groups.onHand),
+                    dailyUse: dailyUse,
                 }
             }
             // console.log(match.groups.product);
@@ -129,9 +134,9 @@ Ending	Prev Week
 Usage	Current
 On Hand	Current
 On Order
-1-BEST FOOD LOGISTICS (6) (£194.67)		
+1-BEST FOOD LOGISTICS (114) (£2,988.08)		
 28234	CHICKEN ORIGINAL	CASE-180	
-0
+7
 
 0.00	
 57.0900
@@ -139,7 +144,7 @@ On Order
 4 (21 Apr 2023) *
 16 Apr 2023 *
 21.09 *
-5.01 *
+3.32 *
 88.00 *
 74524	PEPPER MAYO (FR)	CASE-18KG	
 0
@@ -161,10 +166,10 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.53 *
-0.95 *
+0.92 *
 3.00 *
 71268	SALAD ICEBERG	CASE-4KG	
-0
+1
 
 0.00	
 10.9900
@@ -172,7 +177,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 3.51 *
-1.85 *
+1.63 *
 13.00 *
 71007	TOMATO CHOPPED	CASE-4KG	
 0
@@ -183,10 +188,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.70 *
-0.40 *
+0.34 *
 8.00 *
 74228	LETTUCE APOLLO MIX	CASE-4x250g	
-0
+1
 
 0.00	
 6.0600
@@ -194,10 +199,10 @@ On Order
 1 (21 Apr 2023)
 16 Apr 2023
 1.40
-0.25
+0.15
 13.00
 76173	COLESLAW REGULAR	CASE-36	
-0
+1
 
 0.00	
 11.3500
@@ -205,10 +210,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 2.56 *
-1.14 *
+1.06 *
 13.00 *
 76174	COLESLAW LARGE	CASE-36	
-0
+1
 
 0.00	
 15.3700
@@ -216,7 +221,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 1.64 *
-1.06 *
+0.89 *
 12.00 *
 75749	CHEESE SLICE	CASE-1008	
 0
@@ -227,7 +232,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.41 *
-0.41 *
+0.39 *
 3.00 *
 71243	WHITE CHOCLATE PIECES (Milkybar)	CASE- 8x400g	
 0
@@ -252,7 +257,7 @@ On Order
 1.00 *
 13.00 *
 75831	PICKLED SLAW	CASE-2KG	
-0
+2
 
 0.00	
 6.9000
@@ -271,7 +276,7 @@ On Order
 1 (10 Apr 2023) *
 16 Apr 2023 *
 0.38 *
-1.35 *
+1.30 *
 0.00 *
 76097	CHICKEN OR (DARK MEAT 14:4)	CASE-180	
 0
@@ -285,7 +290,7 @@ On Order
 0.00 *
 6.00 *
 76166	BEANS LARGE PREPOTTED	CASE-48	
-0
+1
 
 0.00	
 29.7500
@@ -293,10 +298,10 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 1.73 *
-1.10 *
+0.96 *
 0.00 *
 76167	BEANS REGULAR PREPOTTED	CASE-64	
-0
+2
 
 0.00	
 22.4800
@@ -304,7 +309,7 @@ On Order
 2 (19 Apr 2023) *
 16 Apr 2023 *
 2.97 *
-1.88 *
+1.70 *
 0.00 *
 74417	HENNY PENNY FILTERS (200)	CASE-200	
 0
@@ -347,7 +352,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.23 *
-1.05 *
+1.03 *
 1.00 *
 76047	SEASONING 3 STEP (2021 Recipe)	CASE-11.1KG	
 0
@@ -358,10 +363,10 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.62 *
-1.00 *
+0.95 *
 1.00 *
 50602	FLOUR 3 STEP	11.34kg	
-0
+9
 
 0.00	
 8.6400
@@ -369,10 +374,10 @@ On Order
 4 (21 Apr 2023)
 16 Apr 2023
 16.59
-4.88
+3.63
 71.00
 75770	ICE CREAM MIX LS	CASE-12KG	
-0
+1
 
 0.00	
 22.1300
@@ -380,10 +385,10 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.62 *
-1.00 *
+0.93 *
 5.00 *
 75797	SAUCE HOT SALSA SMOOTH	CASE-6x1.073kg	
-0
+1
 
 0.00	
 18.7400
@@ -391,7 +396,7 @@ On Order
 1 (03 Apr 2023) *
 16 Apr 2023 *
 0.22 *
-0.33 *
+0.32 *
 0.00 *
 70718	SALT SACHETS	CASE-10000	
 0
@@ -402,7 +407,7 @@ On Order
 1 (10 Apr 2023) *
 16 Apr 2023 *
 0.33 *
-0.47 *
+0.45 *
 1.00 *
 76126	SALT SACHETS 5000 (Contingency)	CASE-5000	
 0
@@ -416,7 +421,7 @@ On Order
 *
 *
 75636	BREADING HOT&SPICY	CASE-60x198g	
-0
+1
 
 0.00	
 31.4200
@@ -427,7 +432,7 @@ On Order
 0.28 *
 0.00 *
 71242	BREADING SALT	CASE- 15.288kg	
-0
+1
 
 0.00	
 12.4000
@@ -435,7 +440,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.71 *
-0.78 *
+0.73 *
 1.00 *
 76063	MILK MILLAC MAID (MILK POT)	CASE-480	
 0
@@ -457,7 +462,7 @@ On Order
 1 (13 Mar 2023) *
 16 Apr 2023 *
 0.49 *
-0.95 *
+0.91 *
 0.00 *
 75982	SACHET BBQ SAUCE	CASE-250	
 0
@@ -479,7 +484,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.44 *
-0.17 *
+0.15 *
 3.00 *
 71244	MILK CARNATION CONDENSED	CASE-12x450g	
 0
@@ -490,7 +495,7 @@ On Order
 1 (13 Mar 2023)
 16 Apr 2023
 0.08
-0.42
+0.41
 0.00
 74226	SAUCE DADDIES (KETCHUP)	CASE-6x1.35KG	
 0
@@ -501,7 +506,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.22 *
-0.20 *
+0.18 *
 3.00 *
 74245	BEAN SALSA	CASE-6x1.178kg	
 0
@@ -534,7 +539,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.98 *
-1.30 *
+1.22 *
 3.00 *
 74277	SACHET LIGHT MAYONNAISE	CASE-1100	
 0
@@ -545,7 +550,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.67 *
-0.50 *
+0.45 *
 5.00 *
 76151	SACHET LIGHT MAYONNAISE CONTINGENCY	CASE-200	
 0
@@ -567,7 +572,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.11 *
-0.10 *
+0.08 *
 1.00 *
 74501	GRAVY 3 STEP (2016)	CASE-50	
 0
@@ -578,7 +583,7 @@ On Order
 1 (21 Apr 2023)
 16 Apr 2023
 0.59
-0.30
+0.24
 2.00
 76018	DIP GARLIC MAYO	CASE-200	
 0
@@ -589,10 +594,10 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 1.09 *
-1.55 *
+1.46 *
 4.60 *
 76016	DIP SMOKY BBQ	CASE-200	
-0
+1
 
 0.00	
 28.0200
@@ -600,7 +605,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 1.17 *
-1.15 *
+1.07 *
 3.60 *
 76017	DIP SWEET CHILLI	CASE-200	
 0
@@ -611,7 +616,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.78 *
-1.10 *
+1.05 *
 0.80 *
 76015	DIP TOMATO SAUCE	CASE-200	
 0
@@ -622,7 +627,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.10 *
-0.95 *
+0.94 *
 2.80 *
 76128	SWEETCORN	CASE-12x340g	
 0
@@ -633,7 +638,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.68 *
-1.17 *
+1.11 *
 5.00 *
 75673	TOPPING OREO CRUMB	CASE-12x400g	
 0
@@ -644,10 +649,10 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.14 *
-1.08 *
+1.06 *
 3.14 *
 75997	SAUCE KANSAS BBQ (BITES)	CASE-6X1.206KG	
-0
+1
 
 0.00	
 20.0800
@@ -655,7 +660,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.63 *
-1.07 *
+1.03 *
 0.00 *
 75766	SAUCE BBQ SMOKEY(Twister)	CASE-6	
 0
@@ -666,7 +671,7 @@ On Order
 1 (20 Mar 2023) *
 16 Apr 2023 *
 0.35 *
-1.90 *
+1.87 *
 2.00 *
 75803	COFFEE BEAN (KB)	CASE-10KG	
 0
@@ -691,7 +696,7 @@ On Order
 0.06 *
 0.00 *
 75810	SAUCE BUTTERMILK DRESSING	CASE-6	
-0
+1
 
 0.00	
 21.8500
@@ -699,7 +704,7 @@ On Order
 1 (07 Apr 2023) *
 16 Apr 2023 *
 0.22 *
-0.32 *
+0.30 *
 1.00 *
 75811	SAUCE SWEET CHILLI (Stacker)	CASE-6	
 0
@@ -710,7 +715,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.24 *
-1.17 *
+1.16 *
 2.00 *
 75866	SAUCE SWEET CHILLI (BITES)	CASE-6x1.13KG	
 0
@@ -721,7 +726,7 @@ On Order
 1 (19 Apr 2023)
 16 Apr 2023
 0.56
-1.72
+1.67
 1.00
 75890	SAUCE VEGAN MAYO	CASE-4x975g	
 0
@@ -743,7 +748,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 1.04 *
-1.24 *
+1.13 *
 3.00 *
 76145	AERO CHOC PIECES	CASE-4KG	
 0
@@ -776,7 +781,7 @@ On Order
 1 (02 Nov 2022) *
 16 Apr 2023 *
 0.09 *
-0.45 *
+0.44 *
 0.00 *
 74321	LID HOT CUP (LID KFC EMBOSSED )	CASE-1000	
 0
@@ -798,7 +803,7 @@ On Order
 1 (31 Mar 2023) *
 16 Apr 2023 *
 0.35 *
-1.00 *
+0.98 *
 0.93 *
 74473	CARRIER 4 CUP (400)	CASE-400	
 0
@@ -809,7 +814,7 @@ On Order
 1 (03 Mar 2023) *
 16 Apr 2023 *
 0.51 *
-0.75 *
+0.72 *
 1.00 *
 70188	CUP 16OZ	CASE-1000	
 0
@@ -820,7 +825,7 @@ On Order
 1 (31 Mar 2023) *
 16 Apr 2023 *
 0.37 *
-0.00 *
+-0.03 *
 1.00 *
 29879	BUCKET & LID 130oz	CASE-125	
 0
@@ -831,7 +836,7 @@ On Order
 1 (12 Apr 2023) *
 16 Apr 2023 *
 0.62 *
-1.35 *
+1.30 *
 1.00 *
 75980	NAPKINS (8000)	CASE-8000	
 0
@@ -842,7 +847,7 @@ On Order
 1 (10 Mar 2023) *
 16 Apr 2023 *
 0.86 *
-0.93 *
+0.87 *
 0.75 *
 50577	BAG FILLET PLASTIC	CASE-2000	
 0
@@ -864,10 +869,10 @@ On Order
 1 (05 Dec 2022) *
 16 Apr 2023 *
 0.87 *
-0.80 *
+0.72 *
 0.00 *
 70187	CUP 22OZ	CASE-1000	
-0
+1
 
 0.00	
 45.0400
@@ -878,7 +883,7 @@ On Order
 0.15 *
 0.00 *
 70255	BOX POPCORN REG	CASE-500	
-0
+1
 
 0.00	
 18.0600
@@ -886,7 +891,7 @@ On Order
 1 (03 Apr 2023) *
 16 Apr 2023 *
 0.20 *
-0.36 *
+0.34 *
 1.00 *
 70256	BOX POPCORN LARGE	CASE-500	
 0
@@ -897,7 +902,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.49 *
-0.92 *
+0.87 *
 1.00 *
 70480	BOX POPCORN SMALL	CASE-1500	
 0
@@ -908,7 +913,7 @@ On Order
 1 (03 Apr 2023) *
 16 Apr 2023 *
 0.21 *
-0.77 *
+0.75 *
 0.00 *
 70547	WETNAPS	CASE-6000	
 0
@@ -919,7 +924,7 @@ On Order
 1 (22 Mar 2023) *
 16 Apr 2023 *
 0.61 *
-0.85 *
+0.80 *
 2.00 *
 76176	WRAP TWISTER BUFFALO	CASE-500	
 0
@@ -941,7 +946,7 @@ On Order
 1 (14 Apr 2023) *
 16 Apr 2023 *
 0.48 *
-0.74 *
+0.71 *
 2.00 *
 76066	PLATE - BOAT TRAY	CASE-1200	
 0
@@ -952,7 +957,7 @@ On Order
 0.9375 (28 Apr 2021) *
 16 Apr 2023 *
 0.09 *
-0.00 *
+-0.01 *
 0.94 *
 76106	PLATE - BOAT TRAY	CASE-1000	
 0
@@ -974,7 +979,7 @@ On Order
 1 (05 Apr 2023) *
 16 Apr 2023 *
 0.21 *
-0.95 *
+0.94 *
 3.00 *
 70858	BAG CORN COBETTE	CASE-3000	
 0
@@ -985,7 +990,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.11 *
-1.80 *
+1.79 *
 0.00 *
 75836	BAG CORN COBETTE	CASE-3000	
 0
@@ -999,7 +1004,7 @@ On Order
 *
 *
 70861	BAG BROWN PAPER	CASE-1000	
-3
+1
 
 3.00	
 29.8900
@@ -1007,7 +1012,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 4.68 *
-0.67 *
+0.36 *
 3.00 *
 76049	BAG CHICKEN SMALL (OR)	CASE-2000	
 0
@@ -1018,7 +1023,7 @@ On Order
 1 (20 Mar 2023) *
 16 Apr 2023 *
 0.30 *
-0.95 *
+0.92 *
 1.00 *
 74229	BAG CHICKEN LARGE	CASE-1800	
 0
@@ -1040,7 +1045,7 @@ On Order
 1 (06 Feb 2023) *
 16 Apr 2023 *
 0.04 *
-1.23 *
+1.22 *
 0.00 *
 76004	BUCKET SNACKBOX	CASE-440	
 0
@@ -1062,7 +1067,7 @@ On Order
 1 (12 Apr 2023) *
 16 Apr 2023 *
 0.08 *
-0.50 *
+0.49 *
 0.00 *
 76072	POT SIDE LARGE (2021)	CASE-1240	
 0
@@ -1073,7 +1078,7 @@ On Order
 1 (12 Apr 2023) *
 16 Apr 2023 *
 0.22 *
-1.00 *
+0.98 *
 1.00 *
 75889	LID SIDE LARGE (RED)	CASE-1152	
 0
@@ -1084,7 +1089,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.31 *
-0.22 *
+0.19 *
 4.00 *
 76073	POT SIDE SMALL (2021)	CASE-2400	
 0
@@ -1095,7 +1100,7 @@ On Order
 1 (05 Apr 2023) *
 16 Apr 2023 *
 0.17 *
-0.70 *
+0.68 *
 1.05 *
 76186	POT SIDE SMALL	CASE-2400	
 0
@@ -1117,10 +1122,10 @@ On Order
 1 (07 Apr 2023) *
 16 Apr 2023 *
 0.25 *
-1.00 *
+0.98 *
 0.00 *
 76157	BAG CARRIER LARGE	CASE-250	
-0
+2
 
 0.00	
 22.8300
@@ -1128,7 +1133,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 3.35 *
-0.98 *
+0.70 *
 18.40 *
 76172	DELIVERY LABELS(World Cup)	CASE-3520	
 0
@@ -1150,7 +1155,7 @@ On Order
 1 (07 Apr 2023) *
 16 Apr 2023 *
 1.10 *
--0.01 *
+-0.12 *
 4.05 *
 74200	BUCKET & LID 85OZ	CASE-200	
 0
@@ -1161,10 +1166,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 1.38 *
-0.60 *
+0.47 *
 7.00 *
 74230	BAG FRIES (GENERIC) 8 x 8	CASE- 4000	
-0
+1
 
 0.00	
 34.9300
@@ -1172,10 +1177,10 @@ On Order
 1 (15 Mar 2023) *
 16 Apr 2023 *
 0.21 *
-0.22 *
+0.20 *
 1.00 *
 75928	BOX 6 IN 1	CASE-300	
-0
+1
 
 0.00	
 43.0500
@@ -1183,7 +1188,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 2.12 *
-0.75 *
+0.62 *
 12.33 *
 74342	STIRRERS WOODEN 7.5"	CASE-5000	
 0
@@ -1205,7 +1210,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.29 *
-1.25 *
+1.22 *
 5.83 *
 75926	CLAMSHELL CLASSIC 2020	CASE-900	
 0
@@ -1216,7 +1221,7 @@ On Order
 1 (14 Apr 2023) *
 16 Apr 2023 *
 0.49 *
-1.17 *
+1.14 *
 3.56 *
 76190	CLAMSHELL CLASSIC 2023	CASE-900	
 0
@@ -1260,7 +1265,7 @@ On Order
 1 (03 Apr 2023) *
 16 Apr 2023 *
 0.22 *
-0.40 *
+0.39 *
 1.00 *
 75976	CORN SKEWERS	CASE-2000	
 0
@@ -1271,7 +1276,7 @@ On Order
 1 (07 Apr 2023) *
 16 Apr 2023 *
 0.17 *
-1.50 *
+1.48 *
 3.50 *
 75777	SCOOP FRIES LARGE (11X11 Fries)	CASE-1300	
 0
@@ -1293,7 +1298,7 @@ On Order
 1 (14 Apr 2023) *
 16 Apr 2023 *
 3.75 *
-0.93 *
+0.63 *
 1.00 *
 75793	BAG FRIES REG (11x11 FRIES)	CASE-5000	
 0
@@ -1304,7 +1309,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.57 *
-1.25 *
+1.20 *
 0.00 *
 75927	CLAMSHELL STACKER & TOWER 2020	CASE-400	
 0
@@ -1315,7 +1320,7 @@ On Order
 1 (17 Apr 2023) *
 16 Apr 2023 *
 0.68 *
-0.82 *
+0.78 *
 0.00 *
 75833	CUP 12oz COFFEE	CASE-600	
 0
@@ -1337,7 +1342,7 @@ On Order
 1 (20 Mar 2023) *
 16 Apr 2023 *
 0.21 *
-0.98 *
+0.96 *
 1.00 *
 75860	LID CARD (Rice / Salad)	CASE-1000	
 0
@@ -1348,7 +1353,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.21 *
-0.90 *
+0.89 *
 1.00 *
 75881	LID CARD CONTINGENCY (Rice / Salad)	CASE-1000	
 0
@@ -1381,7 +1386,7 @@ On Order
 1 (05 Apr 2023) *
 16 Apr 2023 *
 0.19 *
-0.85 *
+0.82 *
 0.00 *
 76034	CUP SOUTHERN REFRESHER	CASE-960	
 0
@@ -1403,7 +1408,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.41 *
-0.63 *
+0.62 *
 2.00 *
 76048	BAG CHICKEN SMALL (H/W)	CASE-2000	
 0
@@ -1414,7 +1419,7 @@ On Order
 1 (28 Nov 2022) *
 16 Apr 2023 *
 0.36 *
--0.01 *
+-0.03 *
 0.00 *
 76131	LID SIPPY	CASE-2112	
 0
@@ -1447,7 +1452,7 @@ On Order
 1 (31 Mar 2023) *
 16 Apr 2023 *
 0.52 *
-0.80 *
+0.77 *
 0.00 *
 70578	HASH BROWN	CASE-250	
 0
@@ -1458,10 +1463,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.92 *
-0.58 *
+0.53 *
 7.00 *
 60011	CORN COBETTES	CASE-96	
-0
+3
 
 0.00	
 16.7100
@@ -1469,7 +1474,7 @@ On Order
 2 (19 Apr 2023)
 16 Apr 2023
 3.57
-1.24
+0.95
 20.00
 76155	BUN MINI FILLET	CASE-108	
 0
@@ -1480,10 +1485,10 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 1.65 *
-1.56 *
+1.50 *
 9.00 *
 74599	CHICKEN HOTWINGS ISP (60X6)	CASE-360	
-0
+7
 
 0.00	
 41.0400
@@ -1491,10 +1496,10 @@ On Order
 4 (21 Apr 2023) *
 16 Apr 2023 *
 14.40 *
-4.55 *
+3.48 *
 51.27 *
 76061	CHICKEN POPCORN (2021 Recipe)	CASE-2072	
-0
+2
 
 0.00	
 65.7200
@@ -1502,7 +1507,7 @@ On Order
 2 (21 Apr 2023) *
 16 Apr 2023 *
 6.72 *
-2.33 *
+1.72 *
 25.00 *
 70865	CHICKEN FROZEN	CASE-12	
 0
@@ -1524,10 +1529,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 1.20 *
-1.00 *
+0.88 *
 6.00 *
 75883	COOKIE CHOCOLATE CHUNK	CASE-115	
-0
+1
 
 0.00	
 35.5300
@@ -1535,10 +1540,10 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.50 *
-0.04 *
+-0.12 *
 0.00 *
 74250	CHICKEN ZINGER ISP	CASE-120	
-0
+1
 
 0.00	
 62.9300
@@ -1546,10 +1551,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 3.87 *
-2.97 *
+2.80 *
 14.00 *
 74256	CHICKEN FILLETS	CASE-120	
-0
+2
 
 0.00	
 66.5500
@@ -1557,10 +1562,10 @@ On Order
 2 (21 Apr 2023) *
 16 Apr 2023 *
 4.76 *
-1.72 *
+1.48 *
 14.00 *
 74257	CHICKEN MINI FILLET	CASE-240	
-0
+6
 
 0.00	
 64.4800
@@ -1568,10 +1573,10 @@ On Order
 3 (21 Apr 2023) *
 16 Apr 2023 *
 12.86 *
-3.90 *
+2.79 *
 53.00 *
 74326	RICE SPICEY	CASE-36X4	
-0
+1
 
 0.00	
 24.9700
@@ -1582,7 +1587,7 @@ On Order
 0.14 *
 5.00 *
 76154	BUN GLAZED	CASE-108	
-0
+2
 
 0.00	
 14.2700
@@ -1590,7 +1595,7 @@ On Order
 2 (21 Apr 2023) *
 16 Apr 2023 *
 6.81 *
-2.94 *
+2.51 *
 27.00 *
 75886	COOKIE WHITE CHOC	CASE-115	
 0
@@ -1604,7 +1609,7 @@ On Order
 0.60 *
 3.00 *
 75782	FRIES 11X11	CASE-10x1.5kg	
-0
+12
 
 0.00	
 17.8700
@@ -1612,7 +1617,7 @@ On Order
 5 (21 Apr 2023) *
 16 Apr 2023 *
 31.15 *
-12.43 *
+10.15 *
 95.00 *
 75835	TORTILLA 25.4cm (4 Flavour Twister)	CASE-192	
 0
@@ -1637,7 +1642,7 @@ On Order
 0.83
 1.00
 75931	CHICKEN OR FILLET BITES FTF	CASE-476	
-0
+1
 
 0.00	
 70.6700
@@ -1645,10 +1650,10 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 1.18 *
-1.22 *
+1.10 *
 5.00 *
 76152	MASHED POTATOES	CASE-893	
-0
+1
 
 0.00	
 16.8000
@@ -1656,7 +1661,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 1.00 *
-1.00 *
+0.96 *
 5.43 *
 76137	TOILET ROLLS	CASE-36	
 0
@@ -1681,7 +1686,7 @@ On Order
 5.00 *
 3.00 *
 74297	BLUE ROLL 1 PLY 400M	CASE-6	
-0
+1
 
 0.00	
 14.1200
@@ -1912,7 +1917,7 @@ On Order
 2.00
 0.00
 75748	OIL PREMIUM PRESSURE FRYER	CASE-20L	
-0
+7
 
 0.00	
 36.5500
@@ -1923,7 +1928,7 @@ On Order
 3.00 *
 29.00 *
 71417	FRUIT SHOOT ORANGE	CASE-24	
-0
+1
 
 0.00	
 6.3800
@@ -1931,10 +1936,10 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.79 *
-0.95 *
+0.74 *
 3.00 *
 71416	FRUIT SHOOT BLK / APL	CASE-24	
-0
+1
 
 0.00	
 6.3800
@@ -1953,7 +1958,7 @@ On Order
 2 (21 Apr 2023)
 16 Apr 2023
 9.04
-9.79
+9.33
 24.00
 74231	TROPICANA ORANGE	CASE-48	
 0
@@ -1964,7 +1969,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.92 *
-1.19 *
+1.13 *
 3.00 *
 76185	TROPICANA ORANGE	CASE-24	
 0
@@ -1978,7 +1983,7 @@ On Order
 *
 *
 71403	BTL DIET PEPSI 1.5L	CASE-12	
-0
+1
 
 0.00	
 7.3100
@@ -2000,7 +2005,7 @@ On Order
 *
 *
 71404	BTL PEPSI MAX 1.5L	CASE-12	
-0
+1
 
 0.00	
 7.3100
@@ -2008,7 +2013,7 @@ On Order
 2 (21 Apr 2023) *
 16 Apr 2023 *
 9.08 *
-5.17 *
+4.08 *
 20.00 *
 71422	BTL PEPSI MAX 2L	CASE-8	
 0
@@ -2022,7 +2027,7 @@ On Order
 *
 *
 71407	BTL TANGO 1.5L	CASE-12	
-0
+1
 
 0.00	
 7.3100
@@ -2030,10 +2035,10 @@ On Order
 1 (21 Apr 2023)
 16 Apr 2023
 3.25
-3.25
+3.00
 16.00
 74553	CAN PEPSI MAX	CASE-24	
-0
+9
 
 0.00	
 8.2600
@@ -2041,10 +2046,10 @@ On Order
 3 (21 Apr 2023)
 16 Apr 2023
 17.75
-5.00
+3.67
 36.00
 74170	BTL 7UP FREE 1.5L	CASE-12	
-0
+1
 
 0.00	
 7.2100
@@ -2052,10 +2057,10 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 2.50 *
-1.25 *
+0.92 *
 8.00 *
 74235	WATER SPRINGBOURNE STILL 500ML	CASE-24	
-0
+4
 
 0.00	
 5.2000
@@ -2063,7 +2068,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 5.71 *
-0.83 *
+0.58 *
 17.00 *
 75696	BIB 7UP FREE(HIGH YIELD)	CASE-12	
 0
@@ -2088,7 +2093,7 @@ On Order
 0.85 *
 0.00 *
 74465	BIB PEPSI MAX (HIGH YIELD)	CASE-12	
-0
+1
 
 0.00	
 22.2800
@@ -2096,7 +2101,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 0.73 *
-1.84 *
+1.77 *
 1.00 *
 75736	BIB TANGO S-FREE 12L(HIGH YIELD)	CASE-12	
 0
@@ -2110,7 +2115,7 @@ On Order
 0.55 *
 0.00 *
 74596	CAN 7UP FREE	CASE-24	
-0
+4
 
 0.00	
 6.1900
@@ -2118,7 +2123,7 @@ On Order
 1 (21 Apr 2023) *
 16 Apr 2023 *
 4.71 *
-0.83 *
+0.25 *
 14.00 *
 76187	CAN 7UP FREE	CASE-24	
 0
@@ -2140,7 +2145,7 @@ On Order
 1 (20 Mar 2023)
 16 Apr 2023
 0.13
-1.30
+1.29
 1.00
 75758	BIB ROBINSONS AP & BLKCURRANT	CASE-7L	
 0
@@ -2165,7 +2170,7 @@ On Order
 0.90 *
 2.00 *
 75709	WATER SPARKLING	CASE-24	
-0
+1
 
 0.00	
 5.3800
@@ -2173,7 +2178,7 @@ On Order
 1 (19 Apr 2023) *
 16 Apr 2023 *
 0.75 *
-0.67 *
+0.58 *
 2.00 *
 75872	BIB WATERMELON LIME	CASE-10	
 0
@@ -2202,23 +2207,23 @@ On Order
 
 Order Totals
 Number of Items	
-6
+114
  	Freight	
 £0.00
  			 	 	 
 Non-Taxable Total	
-0.00
+2,440.74
  	Tax	
-38.93
+109.47
  	Total	
-233.60
+3,097.55
  	 	 
 Taxable Total	
-194.67
+547.34
  	Discount	
 £0.00
 Amount Due	
-233.60
+3,097.55
  	 	 
 Blanket Order No	
  	 	 	 		 	 	 	 	 

@@ -438,7 +438,8 @@ productPreference.oil["OIL VEGETABLE"] ={
 
 productPreference.oil["OIL PREMIUM"] ={
     safeQuantity: 2,
-    sustainAmount: 3
+    sustainAmount: 0,
+    dailyUse: 2.5
 }
 
 // READY DRINKS
