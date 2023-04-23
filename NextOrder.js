@@ -5,11 +5,11 @@
  * @param {number} weeklySalesForecast Weekly forecast inclusive of order date. 
  * @param {number} salesQuotaWeekend Forecasted sales quota as a percentage for the weekend (Friday, Saturday, Sunday)
  * @param {boolean} previousIsInvoiced Has the previous order been invoiced ? true or false
- * @param {boolean} PlacingEndOfDay If placing your order at the end of the sales day set to true
+ * @param {boolean} checkTime If placing your order at the end of the sales day set to true
  * @param {Array} orderDays Enter your available order days if omitted: "Monday", "Wednesday" and "Friday"
  * @returns Forecasted order requirements as a report!
  */
-function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastWeek, weeklySalesForecast, asHTML = false, asUsageGraph = true, salesQuotaWeekend = 51, orderDays = "Monday, Wednesday, Friday", PlacingEndOfDay = true) {
+function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastWeek, weeklySalesForecast, asHTML = false, asUsageGraph = true, salesQuotaWeekend = 51, orderDays = "Monday, Wednesday, Friday", checkTime = true) {
 
     // Import products obj
     const products = require('./DeliveryReportHarvest');
@@ -41,7 +41,14 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
 
     //Declare a placement date!  
     let placementDate = dateConverter(new Date());
-    // let placementDate = dateConverter(`17/04/2023`);
+    // let placementDate = dateConverter(`22/04/2023`);
+
+    //Calculate how long the shop has been opened for
+    let time = new Date().getHours() + (new Date().getMinutes()) / 60;
+    let openTimePercentage = 0;
+    if (time >= 11 && time <= 22) openTimePercentage= time - 11;
+    else if (time > 22) openTimePercentage = 11;
+    openTimePercentage /= 11;
 
     // Check if entered order dates are available!
     // if not suggest the next available date!
@@ -134,8 +141,9 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
         let lastOrderQuantity = products[product].previousOrderQuantity;
         let price = products[product].price;
         let productSize = products[product].case;
+        let quotaReverse = products[product].quotaReverse ? true : false;
         if (debugCount == 12) {
-            debugger
+             debugger
         }
         let deviational = 0;
         if (products[product].sustainAmount) {
@@ -145,11 +153,11 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
         safeQuantity = orderInvoiceDate.getDay() >= 5 ? safeQuantity * 1 : safeQuantity ;
        
         //Map onHand and daily usage figures
-        productUsageDaily(currentDemand, productUsageMap, onHand, lastOrderQuantity, productLastOrderedOn);
+        productUsageDaily(currentDemand, productUsageMap, onHand, lastOrderQuantity, productLastOrderedOn, quotaReverse);
         
 
         //Extract Data for UsageGraph
-        productEvolution[product] = productUsageMap;
+         productEvolution[product] = productUsageMap;
 
 
         /**
@@ -225,11 +233,11 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
 if (asHTML) {
     console.log(`
     <tr>
-    <th>Total Price</th>
-    <th></th>
-    <th></th>
+    <th>Total ex VAT</th>
     <th>${orderTotal.toFixed(2)}</th>
     <th></th>
+    <th>Total Price</th>
+    <th>${(orderTotal + (orderTotal * 0.2)).toFixed(2)}</th>
     <th></th>
     <th></th>
     <th></th>
@@ -239,7 +247,7 @@ if (asHTML) {
     </body>
     </html>`);
 } else {
-    console.log(`Order Total: £${orderTotal.toFixed(2)}`);
+    console.log(`Order Total ex VAT: £${orderTotal.toFixed(2)}\nTotal Price: £${(orderTotal + (orderTotal * 0.2)).toFixed(2)}`);
 }
     module.exports = productEvolution;
 
@@ -341,9 +349,10 @@ if (asHTML) {
      * @param {Number} onHand Current on hand quantity
      * @param {Number} incomingStock Amount of incoming stock
      * @param {date} incomingStockDate Arrival date for incoming stock
+     * @param {boolean} quotaReverse Inverse week and weekend usage!
      * @returns Filled map with daily requirement data! 
      */
-    function productUsageDaily(weeklyUsage, productMap, onHand, incomingStock, incomingStockDate) {
+    function productUsageDaily(weeklyUsage, productMap, onHand, incomingStock, incomingStockDate, quotaReverse) {
 
         //Check if there is incoming stock
         if (incomingStock > 0) {
@@ -352,8 +361,13 @@ if (asHTML) {
         }
 
         // Estimate days to cover sales quota
-        let weekDayQuota = Math.abs((100 - salesQuotaWeekend) / 4);
-        let weekendQuota = salesQuotaWeekend / 3;
+            let weekDayQuota = Math.abs((100 - salesQuotaWeekend) / 4);
+            let weekendQuota = salesQuotaWeekend / 3;
+        if (quotaReverse) {
+            weekendQuota = Math.abs((100 - salesQuotaWeekend) / 3);
+            weekDayQuota = salesQuotaWeekend / 4;
+        }
+        
 
         // Adjust previous weeks usage based on sales forecast!
         let usagePerThousand = (weeklyUsage / salesTotalLastWeek) * 1000;
@@ -370,8 +384,8 @@ if (asHTML) {
             if (dayType >= 5) currentUsage = weeklyUsage * (weekendQuota / 100);
             else currentUsage = weeklyUsage * (weekDayQuota / 100);
             //If placing order end of day!
-            if (dayDate === dateConverter(placementDate, true) && PlacingEndOfDay) {
-                currentUsage = 0;
+            if (dayDate === dateConverter(placementDate, true) && checkTime) {
+                currentUsage = currentUsage - (currentUsage * openTimePercentage);
             }
             //If previous order is invoiced
             if (incomingStockDate === dayDate) {
@@ -404,11 +418,11 @@ if (asHTML) {
 }
 
 nextOrder(
-    "21/4/2023", // Delivery order date
-    true, // Has the previous order been invoiced
-    22500.90, // Last Week's sales 
-    22500, // Weekly Sales Forecast inclusive of order date
+    "26/4/2023", // Delivery order date
+    false, // Has the previous order been invoiced
+    23682, // Last Week's sales 
+    23900, // Weekly Sales Forecast inclusive of order date
     true, // Return document as HTML
-     false, // As Usage Graph
+     true, // As Usage Graph
     // Sales quota for the weekend as %
 )
