@@ -61,7 +61,6 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
 
     //Detect previously placed order for the same placement date!
     for (let product in products) {
-
     let productLastOrderedOn = new Date(products[product].previousOrderDate);
     let lastOrderedArrival = findDeliveryDate(productLastOrderedOn, true);
     if (dateConverter(lastOrderedArrival, true) === dateConverter(orderInvoiceDate, true) && !previousIsInvoiced) {
@@ -126,7 +125,10 @@ function nextOrder(orderInvoiceDate, previousIsInvoiced = false, salesTotalLastW
     let debugCount = 1;
     //Loop through all product objects and perform order necessity calculations!
     for (let product in products) {
-
+        // console.log(product);
+        // if (debugCount === 20) {
+        //     debugger
+        // }
         let nextOrderDate = findDeliveryDate(orderInvoiceDate, true);
         let productUsageMap = findDeliveryDate(placementDate, false, true, true, nextOrderDate, true);
 
@@ -421,11 +423,11 @@ if (asHTML) {
 }
 
 nextOrder(
-    "26/4/2023", // Delivery order date
+    "12/6/2023", // Delivery order date
     false, // Has the previous order been invoiced
     22292, // Last Week's sales 
     23000, // Weekly Sales Forecast inclusive of order date
-    true, // Return document as HTML
+    false, // Return document as HTML
     false, // As Usage Graph
     // Sales quota for the weekend as %
 )
